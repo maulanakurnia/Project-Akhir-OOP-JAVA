@@ -69,18 +69,18 @@ public class Pesanan extends JFrame{
     // Constructor
     public Pesanan(){
         // Set Permission
-//        if(UserSession.getId_user() == null){
-//            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-//            window.setVisible(false);
-//            new Login();
-//        }
-//        else {
+        if(UserSession.getId_user() == null){
+            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            window.setVisible(false);
+            new Login();
+        }
+        else {
             UserSession.setId_user("1");
             loadData();
             loadJenisCucian();
             initComponents();
             initListeners();
-//        }
+        }
     }
 
     // Set Component Swing
@@ -147,7 +147,7 @@ public class Pesanan extends JFrame{
             lStatus.setBounds(340, 63, 150, 20);
             lStatus.setForeground(new Color(255, 255, 255));
             cStatus.setBounds(450, 60, 200, 25);
-            cStatus.addItem("BELUM DIKONFIRMASI");
+            cStatus.addItem("MENUNGGU DIKONFIRMASI");
             cStatus.addItem("SEDANG DIPROSES");
             cStatus.addItem("SEDANG DIPROSES (DICUCI)");
             cStatus.addItem("CUCIAN TELAH SELESAI");
