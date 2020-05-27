@@ -1,4 +1,4 @@
-package Loundry.Controller;
+package Laundry.Controller;
 
 import javax.swing.*;
 import java.math.BigInteger;

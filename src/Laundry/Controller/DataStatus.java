@@ -1,4 +1,4 @@
-package Loundry.Controller;
+package Laundry.Controller;
 
 public class DataStatus {
     String status;

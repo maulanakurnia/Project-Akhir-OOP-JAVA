@@ -1,6 +1,6 @@
-package Loundry.Views;
+package Laundry.Views;
 
-import Loundry.Controller.Koneksi;
+import Laundry.Controller.Koneksi;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;

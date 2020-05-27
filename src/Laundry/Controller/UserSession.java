@@ -1,4 +1,4 @@
-package Loundry.Controller;
+package Laundry.Controller;
 
 public class UserSession {
     private static String id_user, nama;

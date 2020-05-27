@@ -1,8 +1,8 @@
-package Loundry.Views;
+package Laundry.Views;
 
-import Loundry.Controller.DataUser;
-import Loundry.Controller.Koneksi;
-import Loundry.Controller.UserSession;
+import Laundry.Controller.DataUser;
+import Laundry.Controller.Koneksi;
+import Laundry.Controller.UserSession;
 
 import javax.swing.*;
 import java.awt.*;

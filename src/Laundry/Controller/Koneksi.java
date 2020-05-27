@@ -1,4 +1,4 @@
-package Loundry.Controller;
+package Laundry.Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

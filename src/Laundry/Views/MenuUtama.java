@@ -1,6 +1,6 @@
-package Loundry.Views;
+package Laundry.Views;
 
-import Loundry.Controller.UserSession;
+import Laundry.Controller.UserSession;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,8 +81,8 @@ public class MenuUtama extends JFrame {
         if (UserSession.getRole() == 1) {
             bKelolaUser.addActionListener(e -> {
                 window.setVisible(false);
-                JOptionPane.showMessageDialog(null, "FITUR AKAN HADIR DI KEMUDIAN HARI!", "Informasi", JOptionPane.WARNING_MESSAGE);
-                new MenuUtama();
+//                JOptionPane.showMessageDialog(null, "FITUR AKAN HADIR DI KEMUDIAN HARI!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                new KelolaUser();
             });
         }
 

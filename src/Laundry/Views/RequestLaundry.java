@@ -1,8 +1,8 @@
-package Loundry.Views;
+package Laundry.Views;
 
-import Loundry.Controller.DataLaundry;
-import Loundry.Controller.Koneksi;
-import Loundry.Controller.UserSession;
+import Laundry.Controller.DataLaundry;
+import Laundry.Controller.Koneksi;
+import Laundry.Controller.UserSession;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +31,7 @@ public class RequestLaundry extends JFrame {
     JTextField fHarga   = new JTextField();
     JTextField fTotal   = new JTextField();
     // JComboBox
+    JComboBox<String> cUser     = new JComboBox<>();
     JComboBox<String> cJenis    = new JComboBox<>();
     DataLaundry jenis;
     List<DataLaundry>jeniss=new ArrayList<>();

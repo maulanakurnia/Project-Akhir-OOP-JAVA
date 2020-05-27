@@ -1,8 +1,8 @@
-package Loundry.Views;
+package Laundry.Views;
 
-import Loundry.Controller.DataLaundry;
-import Loundry.Controller.Koneksi;
-import Loundry.Controller.UserSession;
+import Laundry.Controller.DataLaundry;
+import Laundry.Controller.Koneksi;
+import Laundry.Controller.UserSession;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -69,17 +69,18 @@ public class Pesanan extends JFrame{
     // Constructor
     public Pesanan(){
         // Set Permission
-        if(UserSession.getId_user() == null){
-            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            window.setVisible(false);
-            new Login();
-        }
-        else {
+//        if(UserSession.getId_user() == null){
+//            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+//            window.setVisible(false);
+//            new Login();
+//        }
+//        else {
+            UserSession.setId_user("1");
             loadData();
             loadJenisCucian();
             initComponents();
             initListeners();
-        }
+//        }
     }
 
     // Set Component Swing
@@ -249,14 +250,14 @@ public class Pesanan extends JFrame{
         });
         // Delete Data
         bHapus.addActionListener(ae -> {
-            int result = JOptionPane.showConfirmDialog(null, "Yakin ingin menghapus data dengan Kode "+fId.getText()+"?", "INFO", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, "Yakin ingin menghapus data dengan Kode "+fIdPesan.getText()+"?", "INFO", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     if(!Objects.equals(cStatus.getSelectedItem(), "TELAH DIAMBIL")){
                         JOptionPane.showMessageDialog(null, "Tidak bisa menghapus pesanan yang belum selesai!");
                     }else {
                         statement = koneksi.getConnection().createStatement();
-                        String sql = "DELETE FROM user WHERE id='" + fId.getText() + "'";
+                        String sql = "DELETE FROM pemesanan WHERE id_pemesanan='" + fIdPesan.getText() + "'";
                         statement.execute(sql);
                         JOptionPane.showMessageDialog(null, "Berhasil Hapus Data!", "Informasi", JOptionPane.WARNING_MESSAGE);
                         statement.close();
@@ -297,7 +298,6 @@ public class Pesanan extends JFrame{
                 }
             }
         });
-
     }
 
     // Load Data on SQL and then import to JTable
