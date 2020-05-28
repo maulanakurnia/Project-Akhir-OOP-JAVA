@@ -75,7 +75,6 @@ public class Pesanan extends JFrame{
             new Login();
         }
         else {
-            UserSession.setId_user("1");
             loadData();
             loadJenisCucian();
             initComponents();
@@ -127,7 +126,7 @@ public class Pesanan extends JFrame{
         window.setResizable(false);
 
         // Set Component ADMIN
-        if(UserSession.getId_user().equals("1")) {
+        if(UserSession.getRole()==1) {
             window.setTitle("Kelola Pesanan");
             lId.setBounds(20, 20, 150, 20);
             lId.setForeground(new Color(255, 255, 255));
@@ -206,7 +205,7 @@ public class Pesanan extends JFrame{
             public void mouseEntered(MouseEvent e) {}
 
             @Override
-            public void mouseExited(MouseEvent e) { }
+            public void mouseExited(MouseEvent e) {}
         });
 
         // Update Data
@@ -305,7 +304,7 @@ public class Pesanan extends JFrame{
         String sql;
         try {
             statement = koneksi.getConnection().createStatement();
-            if (UserSession.getId_user().equals("1")) {
+            if (UserSession.getRole()==1) {
                 sql = "SELECT * FROM pemesanan a INNER JOIN cucian b ON a.id_cucian=b.id_cucian INNER JOIN user c ON a.id_user=c.id_user";
 
             } else {
@@ -314,15 +313,15 @@ public class Pesanan extends JFrame{
             resultSet = statement.executeQuery(sql);
 
             int row = 0;
-            while (resultSet.next()){
-                datas[row][0] = resultSet.getString("username");
-                datas[row][1] = resultSet.getString("id_pemesanan");
-                datas[row][2] = resultSet.getString("jenis_cucian");
-                datas[row][3] = resultSet.getString("tanggal_request");
-                datas[row][4] = resultSet.getString("berat_laundry");
-                datas[row][5] = resultSet.getString("total");
-                datas[row][6] = resultSet.getString("status");
-                row++;
+                while (resultSet.next()) {
+                    datas[row][0] = resultSet.getString("username");
+                    datas[row][1] = resultSet.getString("id_pemesanan");
+                    datas[row][2] = resultSet.getString("jenis_cucian");
+                    datas[row][3] = resultSet.getString("tanggal_request");
+                    datas[row][4] = resultSet.getString("berat_laundry");
+                    datas[row][5] = resultSet.getString("total");
+                    datas[row][6] = resultSet.getString("status");
+                    row++;
             }
             statement.close();
 
