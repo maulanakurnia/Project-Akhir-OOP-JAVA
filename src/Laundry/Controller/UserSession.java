@@ -1,8 +1,8 @@
 package Laundry.Controller;
 
 public class UserSession {
-    private static String id_user, nama;
-    private static int role;
+    static String id_user, nama;
+    static int role;
 
     public static void setId_user(String vid_user){ id_user = vid_user; }
     public static void setNama(String vnama) { nama = vnama; }
