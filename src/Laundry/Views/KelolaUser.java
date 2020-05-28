@@ -5,7 +5,12 @@ import Laundry.Controller.Koneksi;
 import Laundry.Controller.UserSession;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,11 +30,18 @@ public class KelolaUser {
     JFrame window 		    = new JFrame("Kelola User");
     Koneksi koneksi         = new Koneksi();
 
-    // Tabel
+    // Component Table
     String[][] datas        = new String[500][8];
     String[] kolom          = {"ID","Nama User", "Username","No Hp","Sandi", "Role","Dibuat","Diubah"};
-    JTable tTable           = new JTable(datas, kolom);
-    JScrollPane scrollPane  = new JScrollPane(tTable);
+    JTable tTable;
+    JScrollPane pane;
+    TableModel model;
+    TableRowSorter sorter;
+
+    // Tabel
+
+//    JTable tTable           = new JTable(datas, kolom);
+//    JScrollPane pane  = new JScrollPane(tTable);
     // Label
     JLabel lNama            = new JLabel("Nama");
     JLabel lUsername        = new JLabel("Username");
@@ -82,6 +94,13 @@ public class KelolaUser {
 
     private void initComponents(){
         window.getContentPane().setBackground(new Color(28, 27, 27));
+
+        // Set Table Component
+        model = new DefaultTableModel(datas,kolom);
+        sorter= new TableRowSorter<>(model);
+        tTable= new JTable(model);
+        tTable.setRowSorter(sorter);
+        pane = new JScrollPane(tTable);
 
         window.add(lNama);
         lNama.setBounds(680, 20, 150, 20);
@@ -167,9 +186,9 @@ public class KelolaUser {
         columnModel.getColumn(4).setPreferredWidth(70);
         columnModel.getColumn(5).setPreferredWidth(70);
         columnModel.getColumn(6).setPreferredWidth(70);
-        window.add(scrollPane);
-        scrollPane.setBounds(20, 70, 630, 140);
-        scrollPane.setBackground(new Color(247, 252, 255));
+        window.add(pane);
+        pane.setBounds(20, 70, 630, 140);
+        pane.setBackground(new Color(247, 252, 255));
 
         window.setLayout(null);
         window.setSize(1050, 340);
@@ -190,9 +209,9 @@ public class KelolaUser {
                     fNama.setText(nama);
                     String username = tTable.getValueAt(baris, 2).toString();
                     fUsername.setText(username);
-                    String sandi = tTable.getValueAt(baris, 3).toString();
-                    role.setSandi(sandi);
-                    String role = tTable.getValueAt(baris, 4).toString();
+                    String nomorHp = tTable.getValueAt(baris, 3).toString();
+                    fNomorHp.setText(nomorHp);
+                    String role = tTable.getValueAt(baris, 5).toString();
                     cRole.setSelectedItem(role);
 
                 } catch (Exception ea) {
@@ -292,6 +311,29 @@ public class KelolaUser {
                 cLihat.setText("Tutup");
             } else {
                 cLihat.setText("Lihat");
+            }
+        });
+
+        // Search Data with DocumentListener
+        fCari.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(fCari.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(fCari.getText());
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(fCari.getText());
+            }
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter(str));
+                }
             }
         });
     }
