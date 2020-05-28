@@ -191,7 +191,7 @@ public class KelolaUser {
         pane.setBackground(new Color(247, 252, 255));
 
         window.setLayout(null);
-        window.setSize(1050, 340);
+        window.setSize(1060, 340);
         window.setVisible(true);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
@@ -232,25 +232,22 @@ public class KelolaUser {
             public void mouseExited(MouseEvent e) {}
         });
 
-        bTambah.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String MD5 = DataUser.getMd5(fSandi.getText());
-                    statement = koneksi.getConnection().createStatement();
-                    String sql = "INSERT INTO user VALUES(default,'" + fNama.getText() + "','" + fUsername.getText() + "','" + MD5 + "','" + roles.get(cRole.getSelectedIndex()).getIdRole() + "','" + time.format(timestamp) + "','" + time.format(timestamp) + "' )";
-                    int disimpan = statement.executeUpdate(sql);
-                    if (disimpan == 1) {
-                        JOptionPane.showMessageDialog(null, "Selamat anda berhasil mendaftar!", "Informasi", JOptionPane.WARNING_MESSAGE);
-                        statement.close();
-                        window.setVisible(false);
-                        new KelolaUser();
-                    }
-                } catch (SQLException sqlError) {
-                    JOptionPane.showMessageDialog(null, "Gagal mendaftar! error : " + sqlError);
-                } catch (ClassNotFoundException classError) {
-                    JOptionPane.showMessageDialog(null, "Driver tidak ditemukan !!");
+        bTambah.addActionListener(e -> {
+            try {
+                String MD5 = DataUser.getMd5(fSandi.getText());
+                statement = koneksi.getConnection().createStatement();
+                String sql = "INSERT INTO user VALUES(default,'" + fNama.getText() + "','" + fUsername.getText() + "','" + MD5 + "','" + roles.get(cRole.getSelectedIndex()).getIdRole() + "','" + time.format(timestamp) + "','" + time.format(timestamp) + "' )";
+                int disimpan = statement.executeUpdate(sql);
+                if (disimpan == 1) {
+                    JOptionPane.showMessageDialog(null, "Selamat anda berhasil mendaftar!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                    statement.close();
+                    window.setVisible(false);
+                    new KelolaUser();
                 }
+            } catch (SQLException sqlError) {
+                JOptionPane.showMessageDialog(null, "Gagal mendaftar! error : " + sqlError);
+            } catch (ClassNotFoundException classError) {
+                JOptionPane.showMessageDialog(null, "Driver tidak ditemukan !!");
             }
         });
 
@@ -259,7 +256,7 @@ public class KelolaUser {
                 String MD5 = DataUser.getMd5(fSandi.getText());
                 statement = koneksi.getConnection().createStatement();
                 if (fSandi.getText().isEmpty()) {
-                    String sql = "UPDATE user set nama='" + fNama.getText() + "',email='" + fUsername.getText() + "',role='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id='" + fId.getText() + "'";
+                    String sql = "UPDATE user set nama='" + fNama.getText() + "',username='" + fUsername.getText() + "',role_id='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id_user='" + fId.getText() + "'";
                     int disimpan = statement.executeUpdate(sql);
                     if (disimpan == 1) {
                         JOptionPane.showMessageDialog(null, "Berhasil Diubah!", "Informasi", JOptionPane.WARNING_MESSAGE);
@@ -268,7 +265,7 @@ public class KelolaUser {
                         new KelolaUser();
                     }
                 } else {
-                    String sql = "UPDATE user set nama='" + fNama.getText() + "',email='" + fUsername.getText() + "',sandi='" + MD5 + "',role='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id='" + fId.getText() + "'";
+                    String sql = "UPDATE user set nama='" + fNama.getText() + "',email='" + fUsername.getText() + "',sandi='" + MD5 + "',role_id='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id_user='" + fId.getText() + "'";
                     int disimpan = statement.executeUpdate(sql);
                     if (disimpan == 1) {
                         JOptionPane.showMessageDialog(null, "Berhasil Diubah!", "Informasi", JOptionPane.WARNING_MESSAGE);
@@ -288,7 +285,7 @@ public class KelolaUser {
         bHapus.addActionListener(ae -> {
             try {
                 statement = koneksi.getConnection().createStatement();
-                String sql = "DELETE FROM user WHERE id='" + fId.getText() + "'";
+                String sql = "DELETE FROM user WHERE id_user='" + fId.getText() + "'";
                 statement.execute(sql);
                 JOptionPane.showMessageDialog(null, "Berhasil Hapus Data!", "Informasi", JOptionPane.WARNING_MESSAGE);
                 statement.close();
