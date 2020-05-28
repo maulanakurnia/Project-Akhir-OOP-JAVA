@@ -12,7 +12,7 @@ public class MenuUtama extends JFrame {
     JLabel halo			= new JLabel();
     JButton bRlaundry 	= new JButton("Request Laundry");
     JButton bPesanan 	= new JButton("Pesanan");
-    JButton bKelolaUser = new JButton("Kelola User (COMMING SOON)");
+    JButton bKelolaUser = new JButton("Kelola User");
     JButton bLogout 	= new JButton("Log Out");
 
     NumberFormat nf = NumberFormat.getInstance(new Locale("da", "DK"));
@@ -81,7 +81,6 @@ public class MenuUtama extends JFrame {
         if (UserSession.getRole() == 1) {
             bKelolaUser.addActionListener(e -> {
                 window.setVisible(false);
-//                JOptionPane.showMessageDialog(null, "FITUR AKAN HADIR DI KEMUDIAN HARI!", "Informasi", JOptionPane.WARNING_MESSAGE);
                 new KelolaUser();
             });
         }
