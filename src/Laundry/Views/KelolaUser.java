@@ -76,20 +76,19 @@ public class KelolaUser {
 
 
     public KelolaUser(){
-//        if(UserSession.getId_user() == null){
-//            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-//            window.setVisible(false);
-//            new Login();
-//        }else if(UserSession.getRole() != 1){
-//            JOptionPane.showMessageDialog(null, "Akses tidak diberikan!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-//            window.setVisible(false);
-//            new Login();
-//        }else {
-            UserSession.setId_user("1");
+        if(UserSession.getId_user() == null){
+            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            window.setVisible(false);
+            new Login();
+        }else if(UserSession.getRole() != 1){
+            JOptionPane.showMessageDialog(null, "Akses tidak diberikan!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            window.setVisible(false);
+            new Login();
+        }else {
             loadData();
             initComponents();
             initListeners();
-//        }
+        }
     }
 
     private void initComponents(){
