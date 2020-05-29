@@ -234,15 +234,29 @@ public class KelolaUser {
 
         bTambah.addActionListener(e -> {
             try {
-                String MD5 = DataUser.getMd5(fSandi.getText());
-                statement = koneksi.getConnection().createStatement();
-                String sql = "INSERT INTO user VALUES(default,'" + fNama.getText() + "','" + fUsername.getText() + "','" + MD5 + "','" + roles.get(cRole.getSelectedIndex()).getIdRole() + "','" + time.format(timestamp) + "','" + time.format(timestamp) + "' )";
-                int disimpan = statement.executeUpdate(sql);
-                if (disimpan == 1) {
-                    JOptionPane.showMessageDialog(null, "Selamat anda berhasil mendaftar!", "Informasi", JOptionPane.WARNING_MESSAGE);
-                    statement.close();
-                    window.setVisible(false);
-                    new KelolaUser();
+                if(fNama.getText()==null){
+                    JOptionPane.showMessageDialog(null, "Nama Harus Diisi!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                }else if(fUsername.getText()==null){
+                    JOptionPane.showMessageDialog(null, "Username Harus Diisi!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                }else if(fNomorHp.getText()==null){
+                    JOptionPane.showMessageDialog(null, "Nomor Hp Harus Diisi!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                }else if(fSandi.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Sandi Harus Diisi!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                }else if(fKSandi.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Konfirmasi Sandi Harus Diisi!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                }else if(!fSandi.getText().equals(fKSandi.getText())){
+                    JOptionPane.showMessageDialog(null, "Kombinasi Sandi tidak sama!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                }else {
+                    String MD5 = DataUser.getMd5(fSandi.getText());
+                    statement = koneksi.getConnection().createStatement();
+                    String sql = "INSERT INTO user VALUES(default,'" + fNama.getText() + "','" + fUsername.getText() + "','" + fNomorHp.getText() + "','" + MD5 + "','" + roles.get(cRole.getSelectedIndex()).getIdRole() + "','" + time.format(timestamp) + "','" + time.format(timestamp) + "' )";
+                    int disimpan = statement.executeUpdate(sql);
+                    if (disimpan == 1) {
+                        JOptionPane.showMessageDialog(null, "Selamat anda berhasil mendaftar!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                        statement.close();
+                        window.setVisible(false);
+                        new KelolaUser();
+                    }
                 }
             } catch (SQLException sqlError) {
                 JOptionPane.showMessageDialog(null, "Gagal mendaftar! error : " + sqlError);
@@ -253,9 +267,8 @@ public class KelolaUser {
 
         bUpdate.addActionListener(e -> {
             try {
-                String MD5 = DataUser.getMd5(fSandi.getText());
                 statement = koneksi.getConnection().createStatement();
-                if (fSandi.getText().isEmpty()) {
+                if (fSandi.getText().isEmpty() && fKSandi.getText().isEmpty()) {
                     String sql = "UPDATE user set nama='" + fNama.getText() + "',username='" + fUsername.getText() + "',role_id='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id_user='" + fId.getText() + "'";
                     int disimpan = statement.executeUpdate(sql);
                     if (disimpan == 1) {
@@ -265,18 +278,22 @@ public class KelolaUser {
                         new KelolaUser();
                     }
                 } else {
-                    String sql = "UPDATE user set nama='" + fNama.getText() + "',email='" + fUsername.getText() + "',sandi='" + MD5 + "',role_id='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id_user='" + fId.getText() + "'";
-                    int disimpan = statement.executeUpdate(sql);
-                    if (disimpan == 1) {
-                        JOptionPane.showMessageDialog(null, "Berhasil Diubah!", "Informasi", JOptionPane.WARNING_MESSAGE);
-                        statement.close();
-                        window.setVisible(false);
-                        new KelolaUser();
+                    if (!fSandi.getText().equals(fKSandi.getText())) {
+                        JOptionPane.showMessageDialog(null, "Kombinasi sandi tidak sama!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        String MD5 = DataUser.getMd5(fSandi.getText());
+                        String sql = "UPDATE user set nama='" + fNama.getText() + "',email='" + fUsername.getText() + "',sandi='" + MD5 + "',role_id='" + roles.get(cRole.getSelectedIndex()).getIdRole() + "',diubah='" + time.format(timestamp) + "' WHERE id_user='" + fId.getText() + "'";
+                        int disimpan = statement.executeUpdate(sql);
+                        if (disimpan == 1) {
+                            JOptionPane.showMessageDialog(null, "Berhasil Diubah!", "Informasi", JOptionPane.WARNING_MESSAGE);
+                            statement.close();
+                            window.setVisible(false);
+                            new KelolaUser();
+                        }
                     }
                 }
-
             } catch (SQLException sqlError) {
-                JOptionPane.showMessageDialog(null, "Gagal mendaftar! error : " + sqlError);
+                JOptionPane.showMessageDialog(null, "Gagal Mengubah! error : " + sqlError);
             } catch (ClassNotFoundException classError) {
                 JOptionPane.showMessageDialog(null, "Driver tidak ditemukan !!");
             }
@@ -325,13 +342,7 @@ public class KelolaUser {
             public void changedUpdate(DocumentEvent e) {
                 search(fCari.getText());
             }
-            public void search(String str) {
-                if (str.length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter(str));
-                }
-            }
+            public void search(String str) { if (str.length() == 0) { sorter.setRowFilter(null); } else { sorter.setRowFilter(RowFilter.regexFilter(str)); } }
         });
     }
 
